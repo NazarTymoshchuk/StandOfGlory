@@ -18,8 +18,4 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Web_Api_FIrst_Project\Data_Access\Data_Access.csproj" />
-  </ItemGroup>
-
 </Project>
