@@ -16,6 +16,7 @@ namespace Data_Access
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.SeedCities();
+            modelBuilder.SeedBattalions();
 
             modelBuilder.ApplyConfiguration(new BattalionConfigurations());
             modelBuilder.ApplyConfiguration(new CityConfigurations());
