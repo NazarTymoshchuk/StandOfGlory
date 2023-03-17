@@ -31,12 +31,30 @@ namespace StandOfGlory.Controllers
             return Ok(await heroesService.GetAll());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> Get([FromRoute] int id) // FromQuery, FromRoute
         {
             var item = await heroesService.GetById(id);
 
             return Ok(item); // JSON
+        }
+
+        [HttpGet("{city}/GetByCity")]
+        public async Task<IActionResult> GetAllByCity([FromRoute] string city) // FromQuery, FromRoute
+        {
+            return Ok(await heroesService.GetAllByCity(city)); // JSON
+        }
+
+        [HttpGet("{battalion}/GetByBattalio")]
+        public async Task<IActionResult> GetAllByBattalion([FromRoute] string battalion) // FromQuery, FromRoute
+        {
+            return Ok(await heroesService.GetAllByBattalion(battalion)); // JSON
+        }
+
+        [HttpGet("{name}/GetByName")]
+        public async Task<IActionResult> GetAllByName([FromRoute] string name) // FromQuery, FromRoute
+        {
+            return Ok(await heroesService.GetAllByName(name)); // JSON
         }
 
         [HttpPost]

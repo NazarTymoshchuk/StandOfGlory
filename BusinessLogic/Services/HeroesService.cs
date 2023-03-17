@@ -84,5 +84,26 @@ namespace BusinessLogic.Services
 
             return mapper.Map<HeroDto>(hero);
         }
+
+        public async Task<IEnumerable<HeroDto>> GetAllByCity(string city)
+        {
+            var result = await heroesService.GetListBySpec(new Heroes.FilterByCity(city));
+
+            return mapper.Map<IEnumerable<HeroDto>>(result);
+        }
+
+        public async Task<IEnumerable<HeroDto>> GetAllByBattalion(string battalion)
+        {
+            var result = await heroesService.GetListBySpec(new Heroes.FilterByBattalion(battalion));
+
+            return mapper.Map<IEnumerable<HeroDto>>(result);
+        }
+
+        public async Task<IEnumerable<HeroDto>> GetAllByName(string name)
+        {
+            var result = await heroesService.GetListBySpec(new Heroes.FilterByName(name));
+
+            return mapper.Map<IEnumerable<HeroDto>>(result);
+        }
     }
 }
