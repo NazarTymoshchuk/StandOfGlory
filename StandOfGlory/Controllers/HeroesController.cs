@@ -1,7 +1,10 @@
 ﻿using BusinessLogic.DTOs;
+using BusinessLogic.Intefaces;
 using BusinessLogic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace StandOfGlory.Controllers
 {
@@ -10,10 +13,14 @@ namespace StandOfGlory.Controllers
     public class HeroesController : ControllerBase
     {
         private readonly IHeroesService heroesService;
+        private readonly IMailService mailService;
 
-        public HeroesController(IHeroesService heroesService)
+        private string UserEmail => User.FindFirstValue(ClaimTypes.Email);
+
+        public HeroesController(IHeroesService heroesService, IMailService mailService)
         {
             this.heroesService = heroesService;
+            this.mailService = mailService;
         }
 
         [HttpGet]                   // GET: ~/api/movies
@@ -33,6 +40,7 @@ namespace StandOfGlory.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] HeroDto movie)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -56,6 +64,14 @@ namespace StandOfGlory.Controllers
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             await heroesService.Delete(id);
+
+            return Ok();
+        }
+
+        [HttpPost("OfferANewHero")]
+        public async Task<IActionResult> OfferANewHero([FromBody] string story)
+        {
+            await mailService.SendMailAsync("Offer", story, UserEmail);
 
             return Ok();
         }
