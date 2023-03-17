@@ -20,8 +20,7 @@ namespace Data_Access
         public static void AddIdentity(this IServiceCollection services)
         {
             services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<StandOfGloryDbContext>()
-                .AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<StandOfGloryDbContext>();
         }
     }
 }

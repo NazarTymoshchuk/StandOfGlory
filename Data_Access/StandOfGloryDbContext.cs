@@ -6,7 +6,7 @@ using BusinessLogic.Entities;
 
 namespace Data_Access
 {
-    public class StandOfGloryDbContext : DbContext
+    public class StandOfGloryDbContext : IdentityDbContext
     {
         public StandOfGloryDbContext() : base() { }
         public StandOfGloryDbContext(DbContextOptions options) : base(options) { }
