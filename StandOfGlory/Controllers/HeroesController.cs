@@ -59,11 +59,12 @@ namespace StandOfGlory.Controllers
 
         [HttpPost]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> Create([FromBody] HeroDto movie)
+        public async Task<IActionResult> Create([FromBody] CreateHeroDto hero)
+
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            await heroesService.Create(movie);
+            await heroesService.Create(hero);
 
             return Ok();
         }
@@ -71,10 +72,11 @@ namespace StandOfGlory.Controllers
         [HttpPut]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Edit([FromBody] HeroDto movie)
+
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            await heroesService.Edit(movie);
+            await heroesService.Edit(hero);
 
             return Ok();
         }

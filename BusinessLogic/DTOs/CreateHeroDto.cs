@@ -1,6 +1,12 @@
-﻿namespace BusinessLogic.DTOs
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BusinessLogic.DTOs
 {
-    public class HeroDto
+    public class CreateHeroDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -8,8 +14,8 @@
         public DateTime? DateOfDeath { get; set; }
         public string Story { get; set; }
         public string? ImagePath { get; set; }
-        public CityDto? City { get; set; }
-        public BattalionDto? Battalion { get; set; }
+        public int? CityId { get; set; }
+        public int? BattalionId { get; set; }
         public string? CardNumber { get; set; }
     }
 }

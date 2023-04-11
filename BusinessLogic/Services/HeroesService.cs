@@ -19,8 +19,9 @@ namespace BusinessLogic.Services
             this.cardsService = cardsService;
         }
 
-        public async Task Create(HeroDto heroDto)
+        public async Task Create(CreateHeroDto heroDto)
         {
+
             Card card = null;
             
             if (heroDto.CardNumber != null) 

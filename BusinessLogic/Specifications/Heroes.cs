@@ -10,7 +10,9 @@ namespace BusinessLogic.Specifications
             public GetAll()
             {
                 Query
-                    .Include(x => x.Card);
+                    .Include(x => x.Card)
+                    .Include(x => x.City)
+                    .Include(x => x.Battalion);
             }
         }
 
@@ -20,7 +22,9 @@ namespace BusinessLogic.Specifications
             {
                 Query
                     .Where(x => x.Id == id)
-                    .Include(x => x.Card);
+                    .Include(x => x.Card)
+                    .Include(x => x.City)
+                    .Include(x => x.Battalion);
             }
         }
 
@@ -29,8 +33,10 @@ namespace BusinessLogic.Specifications
             public FilterByCity(string city)
             {
                 Query
+                    .Include(x => x.City)
+                    .Where(x => x.City.Name == city)
                     .Include(x => x.Card)
-                    .Where(x => x.City.Name == city);
+                    .Include(x => x.Battalion);
             }
         }
 
@@ -39,8 +45,10 @@ namespace BusinessLogic.Specifications
             public FilterByBattalion(string battalion)
             {
                 Query
+                    .Include(x => x.Battalion)
+                    .Where(x => x.Battalion.Name == battalion)
                     .Include(x => x.Card)
-                    .Where(x => x.Battalion.Name == battalion);
+                    .Include(x => x.City);
             }
         }
 
@@ -49,8 +57,10 @@ namespace BusinessLogic.Specifications
             public FilterByName(string name)
             {
                 Query
+                    .Where(x => x.Name.Contains(name))
                     .Include(x => x.Card)
-                    .Where(x => x.Name.Contains(name));
+                    .Include(x => x.City)
+                    .Include(x => x.Battalion);
             }
         }
     }
