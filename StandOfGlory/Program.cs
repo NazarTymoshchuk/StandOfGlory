@@ -3,6 +3,8 @@ using BusinessLogic.Intefaces;
 using BusinessLogic.Services;
 using Data_Access;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Org.BouncyCastle.Security;
 using StandOfGlory;
 using System.Text.Json.Serialization;
 
@@ -16,10 +18,36 @@ builder.Services.AddControllers()
     .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddJWT(builder.Configuration);
+builder.Services.AddSwaggerGen(c =>
+{
+    OpenApiSecurityScheme securityDefinition = new OpenApiSecurityScheme()
+    {
+        Name = "Bearer",
+        BearerFormat = "JWT",
+        Scheme = "bearer",
+        Description = "Specify the authorization token.",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+    };
+    c.AddSecurityDefinition("jwt_auth", securityDefinition);
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    // Make sure swagger UI requires a Bearer token specified
+    OpenApiSecurityScheme securityScheme = new OpenApiSecurityScheme()
+    {
+        Reference = new OpenApiReference()
+        {
+            Id = "jwt_auth",
+            Type = ReferenceType.SecurityScheme
+        }
+    };
+    OpenApiSecurityRequirement securityRequirements = new OpenApiSecurityRequirement()
+{
+    {securityScheme, new string[] { }},
+};
+    c.AddSecurityRequirement(securityRequirements);
+});
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext(connStr);
 builder.Services.AddIdentity();
@@ -38,13 +66,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.OAuthAppName("Swagger Client");
-        options.OAuthClientId("<Your client id>");
-        options.OAuthClientSecret("<Your client secret>");
-        options.OAuthUseBasicAuthenticationWithAccessCodeGrant();
-    });
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "JWTAuthDemo v1"));
 }
 
 app.UseHttpsRedirection();

@@ -1,9 +1,11 @@
 ﻿using BusinessLogic.DTOs;
 using BusinessLogic.Intefaces;
 using BusinessLogic.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace StandOfGlory.Controllers
@@ -23,9 +25,7 @@ namespace StandOfGlory.Controllers
             this.mailService = mailService;
         }
 
-        [HttpGet]                   // GET: ~/api/movies
-        //[HttpGet("collection")]   // GET: ~/api/movies/collection
-        //[HttpGet("/movies")]      // GET: ~/movies
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             return Ok(await heroesService.GetAll());
@@ -51,15 +51,16 @@ namespace StandOfGlory.Controllers
             return Ok(await heroesService.GetAllByBattalion(battalion)); // JSON
         }
 
-        [HttpGet("{name}/GetByName")]
-        public async Task<IActionResult> GetAllByName([FromRoute] string name) // FromQuery, FromRoute
+        [HttpGet("{name}/SearchName")]
+        public async Task<IActionResult> SearchByName([FromRoute] string name) // FromQuery, FromRoute
         {
             return Ok(await heroesService.GetAllByName(name)); // JSON
         }
 
         [HttpPost]
-        //[Authorize]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Create([FromBody] CreateHeroDto hero)
+
         {
             if (!ModelState.IsValid) return BadRequest();
 
@@ -69,7 +70,9 @@ namespace StandOfGlory.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] HeroDto hero)
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> Edit([FromBody] HeroDto movie)
+
         {
             if (!ModelState.IsValid) return BadRequest();
 
@@ -79,6 +82,7 @@ namespace StandOfGlory.Controllers
         }
 
         [HttpDelete("{id}")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             await heroesService.Delete(id);
@@ -87,6 +91,7 @@ namespace StandOfGlory.Controllers
         }
 
         [HttpPost("OfferANewHero")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> OfferANewHero([FromBody] string story)
         {
             await mailService.SendMailAsync("Offer", story, UserEmail);

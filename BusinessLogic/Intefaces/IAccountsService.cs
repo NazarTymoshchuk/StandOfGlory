@@ -11,7 +11,7 @@ namespace BusinessLogic.Intefaces
     public interface IAccountsService
     {
         Task<IdentityUser> Get(string id);
-        Task Login(LoginDto dto);
+        Task<LoginResponseDto> Login(LoginDto dto);
         Task Register(RegisterDto dto);
         Task Logout();
     }
