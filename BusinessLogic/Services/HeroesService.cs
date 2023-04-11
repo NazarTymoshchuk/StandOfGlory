@@ -21,19 +21,6 @@ namespace BusinessLogic.Services
 
         public async Task Create(HeroDto heroDto)
         {
-            /*
-             {
-  "name": "aaa",
-  "birthDate": "2022-03-15T18:34:53.768Z",
-  "dateOfDeath": "2025-02-15T18:34:53.768Z",
-  "story": "Lorem",
-  "imagePath": "https://www.google.com",
-  "cityId": 2,
-  "battalionId": 1,
-  "card": "423423432423"
-}*/
-
-
             Card card = null;
             
             if (heroDto.CardNumber != null) 

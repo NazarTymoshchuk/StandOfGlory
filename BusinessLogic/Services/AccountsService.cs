@@ -33,7 +33,7 @@ namespace BusinessLogic.Services
             return user;
         }
 
-        public async Task Login(LoginDto dto)
+        public async Task<LoginResponseDto> Login(LoginDto dto)
         {
             var user = await userManager.FindByNameAsync(dto.Username);
 
@@ -42,10 +42,10 @@ namespace BusinessLogic.Services
 
             await signInManager.SignInAsync(user, true);
 
-            //return new LoginResponseDto()
-            //{
-            //    Token = jwtService.CreateToken(jwtService.GetClaims(user))
-            //};
+            return new LoginResponseDto()
+            {
+                Token = jwtService.CreateToken(jwtService.GetClaims(user))
+            };
         }
 
         public async Task Logout()
