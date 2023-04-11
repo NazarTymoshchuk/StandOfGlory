@@ -58,22 +58,22 @@ namespace StandOfGlory.Controllers
         }
 
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Create([FromBody] HeroDto movie)
+        //[Authorize]
+        public async Task<IActionResult> Create([FromBody] CreateHeroDto hero)
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            await heroesService.Create(movie);
+            await heroesService.Create(hero);
 
             return Ok();
         }
 
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] HeroDto movie)
+        public async Task<IActionResult> Edit([FromBody] HeroDto hero)
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            await heroesService.Edit(movie);
+            await heroesService.Edit(hero);
 
             return Ok();
         }
