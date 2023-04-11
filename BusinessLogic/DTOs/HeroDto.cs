@@ -8,9 +8,7 @@
         public DateTime? DateOfDeath { get; set; }
         public string Story { get; set; }
         public string? ImagePath { get; set; }
-        public int? CityId { get; set; }
         public CityDto? City { get; set; }
-        public int? BattalionId { get; set; }
         public BattalionDto? Battalion { get; set; }
         public string? CardNumber { get; set; }
     }
