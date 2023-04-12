@@ -30,12 +30,12 @@ namespace StandOfGlory.Controllers
         {
             return Ok(await heroesService.GetAll());
         }
-        [HttpGet("/Battalions")]
+        [HttpGet("Battalions")]
         public async Task<IActionResult> GetBattalions()
         {
             return Ok(await heroesService.GetAllBattalions());
         }
-        [HttpGet("/cities")]
+        [HttpGet("cities")]
         public async Task<IActionResult> GetCities()
         {
             return Ok(await heroesService.GetAllCities());
