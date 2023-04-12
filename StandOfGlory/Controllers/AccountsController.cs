@@ -32,8 +32,8 @@ namespace StandOfGlory.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
-            await accountsService.Login(dto);
-            return Ok();
+            var result = await accountsService.Login(dto);
+            return Ok(result);
         }
 
         [HttpPost("logout")]
