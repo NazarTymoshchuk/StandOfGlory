@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogic.DTOs;
 using BusinessLogic.Entities;
+using BusinessLogic.Intefaces;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Specifications;
 
@@ -10,13 +11,19 @@ namespace BusinessLogic.Services
     {
         private readonly IRepository<Hero> heroesService;
         private readonly IRepository<Card> cardsService;
+        private readonly IRepository<City> cityService;
+        private readonly IRepository<Battalion> battalionService;
+        private readonly IFileService fileService;
         private readonly IMapper mapper;
 
-        public HeroesService(IRepository<Hero> heroesService, IMapper mapper, IRepository<Card> cardsService)
+        public HeroesService(IRepository<Hero> heroesService, IMapper mapper, IRepository<Card> cardsService, IRepository<City> cityService, IRepository<Battalion> battalionService, IFileService fileService)
         {
             this.heroesService = heroesService;
             this.mapper = mapper;
             this.cardsService = cardsService;
+            this.cityService = cityService;
+            this.battalionService = battalionService;
+            this.fileService = fileService;
         }
 
         public async Task Create(CreateHeroDto heroDto)
@@ -33,9 +40,11 @@ namespace BusinessLogic.Services
                 await cardsService.Insert(card);
                 await cardsService.Save();
             }
+            string imagePath = fileService.SaveProductImage(heroDto.Image);
 
             var hero = mapper.Map<Hero>(heroDto);
             hero.CardId = card?.Id;
+            hero.ImagePath = imagePath;
 
             await heroesService.Insert(hero);
             await heroesService.Save();
@@ -46,6 +55,7 @@ namespace BusinessLogic.Services
             if (await heroesService.GetById(id) == null)
                 return;
 
+            fileService.DeleteProductImage(heroesService.GetById(id).Result.ImagePath);
             await heroesService.Delete(id);
             await heroesService.Save();
         }
@@ -62,7 +72,16 @@ namespace BusinessLogic.Services
 
             return mapper.Map<IEnumerable<HeroDto>>(result);
         }
-
+        public async Task<IEnumerable<BattalionDto>> GetAllBattalions()
+        {
+            var result = await battalionService.GetAll();
+            return mapper.Map<IEnumerable<BattalionDto>>(result);
+        }
+        public async Task<IEnumerable<CityDto>> GetAllCities()
+        {
+            var result = await cityService.GetAll();
+            return mapper.Map<IEnumerable<CityDto>>(result);
+        }
         public async Task<HeroDto?> GetById(int id)
         {
             Hero? hero = await heroesService.GetItemBySpec(new Heroes.GetById(id));

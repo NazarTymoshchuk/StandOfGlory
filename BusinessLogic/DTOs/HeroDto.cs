@@ -1,4 +1,6 @@
-﻿namespace BusinessLogic.DTOs
+﻿using Microsoft.AspNetCore.Http;
+
+namespace BusinessLogic.DTOs
 {
     public class HeroDto
     {

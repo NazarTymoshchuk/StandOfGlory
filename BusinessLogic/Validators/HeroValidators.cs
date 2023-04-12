@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Validators
 {
-    public class HeroValidators : AbstractValidator<HeroDto>
+    public class HeroValidators : AbstractValidator<CreateHeroDto>
     {
         public HeroValidators() 
         {
@@ -17,8 +17,10 @@ namespace BusinessLogic.Validators
                 .NotEmpty()
                 .MinimumLength(2);
 
-            RuleFor(x => x.ImagePath)
-                .Must(LinkMustBeAUri).WithMessage("{PropertyName} has incorrect URL format");
+            //RuleFor(x => x.ImagePath)
+            //    .Must(LinkMustBeAUri).WithMessage("{PropertyName} has incorrect URL format");
+            RuleFor(x => x.Image)
+                .NotNull().WithMessage("Product image is required!");
 
             RuleFor(x => x.DateOfDeath)
                 .LessThan(DateTime.Now);
