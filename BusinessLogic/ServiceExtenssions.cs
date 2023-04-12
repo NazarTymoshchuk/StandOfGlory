@@ -20,6 +20,7 @@ namespace BusinessLogic
             services.AddScoped<IAccountsService, AccountsService>();
             services.AddScoped<IJWTService, JWTService>();
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IFileService, FileService>();
         }
 
         public static void AddValidators(this IServiceCollection services)

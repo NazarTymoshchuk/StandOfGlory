@@ -30,7 +30,16 @@ namespace StandOfGlory.Controllers
         {
             return Ok(await heroesService.GetAll());
         }
-
+        [HttpGet("/Battalions")]
+        public async Task<IActionResult> GetBattalions()
+        {
+            return Ok(await heroesService.GetAllBattalions());
+        }
+        [HttpGet("/cities")]
+        public async Task<IActionResult> GetCities()
+        {
+            return Ok(await heroesService.GetAllCities());
+        }
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get([FromRoute] int id) // FromQuery, FromRoute
         {
@@ -59,10 +68,9 @@ namespace StandOfGlory.Controllers
 
         [HttpPost]
         //[Authorize]
-        public async Task<IActionResult> Create([FromBody] CreateHeroDto hero)
+        public async Task<IActionResult> Create([FromForm] CreateHeroDto hero)
         {
             if (!ModelState.IsValid) return BadRequest();
-
             await heroesService.Create(hero);
 
             return Ok();
