@@ -40,7 +40,9 @@ namespace BusinessLogic.Services
                 await cardsService.Insert(card);
                 await cardsService.Save();
             }
-            string imagePath = fileService.SaveProductImage(heroDto.Image);
+            string imagePath = null;
+            if (heroDto.Image != null)
+                imagePath = fileService.SaveProductImage(heroDto.Image);
 
             var hero = mapper.Map<Hero>(heroDto);
             hero.CardId = card?.Id;

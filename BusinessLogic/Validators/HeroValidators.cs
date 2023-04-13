@@ -19,11 +19,14 @@ namespace BusinessLogic.Validators
 
             //RuleFor(x => x.ImagePath)
             //    .Must(LinkMustBeAUri).WithMessage("{PropertyName} has incorrect URL format");
-            RuleFor(x => x.Image)
-                .NotNull().WithMessage("Product image is required!");
+            //RuleFor(x => x.Image)
+            //    .NotNull().WithMessage("Product image is required!");
 
             RuleFor(x => x.DateOfDeath)
                 .LessThan(DateTime.Now);
+
+            RuleFor(x => x.DateOfDeath)
+                .GreaterThan(x => x.BirthDate);
         }
 
         private static bool LinkMustBeAUri(string? link)

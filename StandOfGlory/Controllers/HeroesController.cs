@@ -30,12 +30,12 @@ namespace StandOfGlory.Controllers
         {
             return Ok(await heroesService.GetAll());
         }
-        [HttpGet("/Battalions")]
+        [HttpGet("battalions")]
         public async Task<IActionResult> GetBattalions()
         {
             return Ok(await heroesService.GetAllBattalions());
         }
-        [HttpGet("/cities")]
+        [HttpGet("cities")]
         public async Task<IActionResult> GetCities()
         {
             return Ok(await heroesService.GetAllCities());
@@ -68,7 +68,7 @@ namespace StandOfGlory.Controllers
 
         [HttpPost]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> Create([FromForm] CreateHeroDto hero)
+        public async Task<IActionResult> Create([FromBody] CreateHeroDto hero)
 
         {
             if (!ModelState.IsValid) return BadRequest();
