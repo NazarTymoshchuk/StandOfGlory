@@ -77,6 +77,8 @@ app.UseCors(options =>
     options.AllowAnyMethod();
     options.AllowAnyOrigin();
 });
+// add static img files for base
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
