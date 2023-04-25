@@ -28,7 +28,7 @@ namespace BusinessLogic.Services
         {
             // get image destination path
             var folderName = Path.Combine("Resources", "Images");
-            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot", folderName);
             string name = Guid.NewGuid().ToString();    // random name
             string extension = Path.GetExtension(file.FileName); // get original extension
             string fullName = name + extension;         // full name: name.ext
