@@ -68,8 +68,7 @@ namespace StandOfGlory.Controllers
 
         [HttpPost]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> Create([FromBody] CreateHeroDto hero)
-
+        public async Task<IActionResult> Create([FromForm] CreateHeroDto hero)
         {
             if (!ModelState.IsValid) return BadRequest();
             await heroesService.Create(hero);
